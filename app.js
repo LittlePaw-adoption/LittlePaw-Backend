@@ -21,13 +21,13 @@ const indexRoutes = require("./routes/index.routes");
 app.use("/api", indexRoutes);
 
 const petRoutes = require("./routes/pet.routes");
-app.use("/api", petRoutes);
+app.use("/api", isAuthenticated, petRoutes);
 
 const shelterRoutes = require("./routes/shelter.routes");
-app.use("/api", shelterRoutes);
+app.use("/api", isAuthenticated, shelterRoutes);
 
 const userRoutes = require("./routes/user.routes");
-app.use("/api", userRoutes);
+app.use("/api", isAuthenticated, userRoutes);
 
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);

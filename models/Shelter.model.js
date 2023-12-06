@@ -6,11 +6,11 @@ const shelterSchema = new Schema(
       type: String,
       required: [true, "Name is required."],
     },
-    Location: {
+    location: {
       type: String,
       required: [true, "Location is required."],
     },
-    Contact: {
+    contact: {
       type: Number,
       required: [true, "Contact is required."],
     },

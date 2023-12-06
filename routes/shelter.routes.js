@@ -45,7 +45,8 @@ router.get("/shelters/:shelterId", (req, res, next) => {
 
 //Updates a specific shelter by id
 router.put("/shelters/:shelterId", (req, res, next) => {
-    Shelter.findByIdAndUpdate(req.params.shelterId)
+const { shelterId } = req.params;
+    Shelter.findByIdAndUpdate(shelterId, req.body, {new:true})
     .then((shelterDetails) => {
       res.json(shelterDetails);
     })
