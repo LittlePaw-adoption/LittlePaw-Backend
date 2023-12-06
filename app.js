@@ -13,8 +13,11 @@ const app = express();
 
 const { isAuthenticated } = require("./middleware/jwt.middleware");
 
+const cors = require("cors");
+
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 require("./config")(app);
+app.use(cors({ origin: "*" }));
 
 // 👇 Start handling routes here
 const indexRoutes = require("./routes/index.routes");
