@@ -12,7 +12,6 @@ const shelterSchema = new Schema(
     },
     contact: {
       type: Number,
-      required: [true, "Contact is required."],
     },
     description: {
         type: String,
