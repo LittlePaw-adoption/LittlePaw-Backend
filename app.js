@@ -12,6 +12,7 @@ const express = require("express");
 const app = express();
 
 const { isAuthenticated } = require("./middleware/jwt.middleware");
+const { isOwner } = require("./middleware/protected.resources");
 
 const cors = require("cors");
 
@@ -24,7 +25,7 @@ const indexRoutes = require("./routes/index.routes");
 app.use("/api", indexRoutes);
 
 const petRoutes = require("./routes/pet.routes");
-app.use("/api", isAuthenticated, petRoutes);
+app.use("/api", isAuthenticated,  petRoutes);
 
 const shelterRoutes = require("./routes/shelter.routes");
 app.use("/api", isAuthenticated, shelterRoutes);

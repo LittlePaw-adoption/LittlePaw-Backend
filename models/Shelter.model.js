@@ -15,7 +15,11 @@ const shelterSchema = new Schema(
     },
     description: {
         type: String,
-    }
+    },
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

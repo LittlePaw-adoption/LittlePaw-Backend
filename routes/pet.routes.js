@@ -1,6 +1,9 @@
 const Pet = require("../models/Pet.model");
-
+const isOwner = require("../middleware/protected.resources");
 const router = require("express").Router();
+const {isAuthenticated} = require("../middleware/jwt.middleware.js");
+
+
 
 router.get("/pets", (req, res, next) => {
   Pet.find({})
@@ -12,15 +15,17 @@ router.get("/pets", (req, res, next) => {
     });
 });
 
-router.post("/pets", (req, res, next) => {
+router.post("/pets", isAuthenticated, (req, res, next) => {
   const { name, species, breed, age, description } = req.body;
-
+  console.log(req.payload)
+  const createdBy = req.payload._id;
   Pet.create({
     name,
     species,
     breed,
     age,
     description,
+    createdBy,
   })
     .then((pets) => {
       res.json(pets);
@@ -42,7 +47,7 @@ router.get("/pets/:petId", (req, res, next) => {
     });
 });
 
-router.put("/pets/:petId", (req, res, next) => {
+router.put("/pets/:petId", isAuthenticated, isOwner, (req, res, next) => {
   const { petId } = req.params;
 
   Pet.findByIdAndUpdate(petId, req.body, { new: true })
@@ -54,16 +59,18 @@ router.put("/pets/:petId", (req, res, next) => {
     });
 });
 
-router.delete("/pets/:petId", (req, res, next) => {
-  const { petId } = req.params;
+router.delete("/pets/:petId", isAuthenticated, isOwner,  async (req, res, next) => {
+ 
+  try {
+    const { petId } = req.params;
+  await Pet.findByIdAndDelete(petId);
+  
 
-  Pet.findByIdAndDelete(petId)
-    .then((deletePet) => {
-      res.json(deletePet);
-    })
-    .catch((err) => {
-      next(err);
-    });
+    res.status(200).json({msg:"Deleted succesfuly"});
+  } catch (error) {
+    console.error("Error deleting pet:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 module.exports = router;
