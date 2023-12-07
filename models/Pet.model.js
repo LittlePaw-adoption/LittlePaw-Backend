@@ -26,6 +26,10 @@ const petSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    status: {
+      type: String,
+      default: "For adoption"
+    }
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

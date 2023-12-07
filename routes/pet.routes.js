@@ -16,7 +16,7 @@ router.get("/pets", (req, res, next) => {
 });
 
 router.post("/pets", isAuthenticated, (req, res, next) => {
-  const { name, species, breed, age, description } = req.body;
+  const { name, species, breed, age, description, status } = req.body;
   console.log(req.payload)
   const createdBy = req.payload._id;
   Pet.create({
@@ -26,6 +26,7 @@ router.post("/pets", isAuthenticated, (req, res, next) => {
     age,
     description,
     createdBy,
+    status,
   })
     .then((pets) => {
       res.json(pets);
