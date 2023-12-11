@@ -53,7 +53,9 @@ router.put("/pets/:petId", isAuthenticated, isOwner, (req, res, next) => {
 
   Pet.findByIdAndUpdate(petId, req.body, { new: true })
     .then((updatePet) => {
-      res.json(updatePet);
+      return Pet.find()
+    }).then((pets) => {
+      res.status(200).json({msg: "Pet updated succesfully!", pets})
     })
     .catch((err) => {
       next(err);
