@@ -25,6 +25,15 @@ const userSchema = new Schema(
     profileImage: {
       type: String,
     },
+    bgImage: {
+      type: String,
+    },
+    country: {
+      type: String,
+    },
+    bio: {
+      type: String,
+    },
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
