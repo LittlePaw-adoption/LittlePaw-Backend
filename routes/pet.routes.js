@@ -3,7 +3,7 @@ const isOwner = require("../middleware/protected.resources");
 const router = require("express").Router();
 const {isAuthenticated} = require("../middleware/jwt.middleware.js");
 
-
+const fileUploader = require("../config/cloudinary.config");
 
 router.get("/pets", (req, res, next) => {
   Pet.find({})
@@ -15,9 +15,20 @@ router.get("/pets", (req, res, next) => {
     });
 });
 
+router.post("/upload", fileUploader.single("petImage"), (req, res, next) => {
+
+  if (!req.file) {
+    next(new Error("No file uploaded!"));
+    return;
+  }
+
+  res.json({ fileUrl: req.file.path });
+});
+
 router.post("/pets", isAuthenticated, (req, res, next) => {
-  const { name, species, breed, age, description, status } = req.body;
+  const { name, species, breed, age, description, status, petImage } = req.body;
   console.log(req.payload)
+  console.log("req.body", req.body)
   const createdBy = req.payload._id;
   Pet.create({
     name,
@@ -27,6 +38,7 @@ router.post("/pets", isAuthenticated, (req, res, next) => {
     description,
     createdBy,
     status,
+    petImage
   })
     .then((pets) => {
       res.json(pets);

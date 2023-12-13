@@ -29,6 +29,9 @@ const petSchema = new Schema(
     status: {
       type: String,
       default: "For adoption"
+    },
+    petImage: {
+      type: String,
     }
   },
   {

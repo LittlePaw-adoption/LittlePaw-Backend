@@ -2,8 +2,6 @@ const Shelter = require("../models/Shelter.model");
 
 const router = require("express").Router();
 
-const mongoose = require("mongoose");
-
 router.get("/shelters", (req, res, next) => {
     Shelter.find({})
     .then((shelter) => {
