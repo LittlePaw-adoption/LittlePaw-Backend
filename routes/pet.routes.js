@@ -73,6 +73,19 @@ router.put("/pets/:petId", isAuthenticated, isOwner, (req, res, next) => {
     });
 });
 
+router.put("/adopt/pets/:petId", isAuthenticated, (req, res, next) => {
+  const { petId } = req.params;
+
+  Pet.findByIdAndUpdate(petId, req.body, { new: true })
+    .then((updatePet) => {
+      res.json(updatePet)
+    })
+    
+    .catch((err) => {
+      next(err);
+    });
+});
+
 router.delete("/pets/:petId", isAuthenticated, isOwner,  async (req, res, next) => {
  
   try {
