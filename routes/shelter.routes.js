@@ -1,4 +1,5 @@
 const Shelter = require("../models/Shelter.model");
+const {isAuthenticated} = require("../middleware/jwt.middleware.js");
 
 const router = require("express").Router();
 
@@ -13,16 +14,19 @@ router.get("/shelters", (req, res, next) => {
 });
 
 //Creates a new shelter
-router.post("/shelters", (req, res, next) => {
+router.post("/shelters", isAuthenticated, (req, res, next) => {
+  const { name, location, contact, description, shelterImage } = req.body;
+  const createdBy = req.payload._id;
     Shelter.create({
-    name: req.body.name,
-    location: req.body.location,
-    contact: req.body.contact,
-    phone: req.body.phone,
-    description: req.body.description,
+    name,
+    location,
+    contact,
+    description,
+    shelterImage,
+    createdBy
   })
-    .then(() => {
-      res.send("A shelter was created!");
+    .then((shelter) => {
+      res.json(shelter);
     })
     .catch((error) => {
       next(error);

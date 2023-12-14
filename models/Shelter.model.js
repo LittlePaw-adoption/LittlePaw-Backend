@@ -11,7 +11,7 @@ const shelterSchema = new Schema(
       required: [true, "Location is required."],
     },
     contact: {
-      type: Number,
+      type: String,
     },
     description: {
         type: String,
