@@ -25,7 +25,7 @@ const userSchema = new Schema(
     profileImage: {
       type: String,
     },
-    bgImage: {
+    banner: {
       type: String,
     },
     country: {

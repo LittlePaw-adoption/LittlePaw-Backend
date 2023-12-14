@@ -15,7 +15,7 @@ router.get("/pets", (req, res, next) => {
     });
 });
 
-router.post("/upload", fileUploader.single("petImage"), (req, res, next) => {
+router.post("/upload", fileUploader.single("uploadImg"), (req, res, next) => {
 
   if (!req.file) {
     next(new Error("No file uploaded!"));
