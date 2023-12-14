@@ -6,7 +6,7 @@ const {isAuthenticated} = require("../middleware/jwt.middleware.js");
 const fileUploader = require("../config/cloudinary.config");
 
 router.get("/pets", (req, res, next) => {
-  Pet.find({})
+  Pet.find({}).populate("createdBy")
     .then((pet) => {
       res.json(pet);
     })
@@ -51,7 +51,7 @@ router.post("/pets", isAuthenticated, (req, res, next) => {
 router.get("/pets/:petId", (req, res, next) => {
   const { petId } = req.params;
 
-  Pet.findById(petId)
+  Pet.findById(petId).populate("createdBy")
     .then((petDetails) => {
       res.json(petDetails);
     })
