@@ -57,7 +57,7 @@ router.get("/shelters/:shelterId", (req, res, next) => {
 });
 
 //Updates a specific shelter by id
-router.put("/shelters/:shelterId", isAuthenticated, isOwner, (req, res, next) => {
+router.put("/shelters/:shelterId", isAuthenticated, (req, res, next) => {
 const { shelterId } = req.params;
     Shelter.findByIdAndUpdate(shelterId, req.body, {new:true})
     .then((shelterDetails) => {
