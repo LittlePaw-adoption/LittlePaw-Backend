@@ -1,7 +1,18 @@
 const Shelter = require("../models/Shelter.model");
+const isOwnerShelters = require("../middleware/protected.shelter.resources.js")
+const router = require("express").Router();
 const {isAuthenticated} = require("../middleware/jwt.middleware.js");
 
-const router = require("express").Router();
+
+router.get("/shelters", (req, res, next) => {
+  Shelter.find({}).populate("createdBy")
+    .then((shelter) => {
+      res.json(shelter);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+});
 
 router.get("/shelters", (req, res, next) => {
     Shelter.find({})
@@ -46,7 +57,7 @@ router.get("/shelters/:shelterId", (req, res, next) => {
 });
 
 //Updates a specific shelter by id
-router.put("/shelters/:shelterId", (req, res, next) => {
+router.put("/shelters/:shelterId", isAuthenticated, isOwnerShelters, (req, res, next) => {
 const { shelterId } = req.params;
     Shelter.findByIdAndUpdate(shelterId, req.body, {new:true})
     .then((shelterDetails) => {
