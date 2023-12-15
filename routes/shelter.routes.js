@@ -1,5 +1,5 @@
 const Shelter = require("../models/Shelter.model");
-const isOwnerShelters = require("../middleware/protected.shelter.resources.js")
+const isOwner = require("../middleware/protected.resources.js")
 const router = require("express").Router();
 const {isAuthenticated} = require("../middleware/jwt.middleware.js");
 
@@ -57,7 +57,7 @@ router.get("/shelters/:shelterId", (req, res, next) => {
 });
 
 //Updates a specific shelter by id
-router.put("/shelters/:shelterId", isAuthenticated, isOwnerShelters, (req, res, next) => {
+router.put("/shelters/:shelterId", isAuthenticated, isOwner, (req, res, next) => {
 const { shelterId } = req.params;
     Shelter.findByIdAndUpdate(shelterId, req.body, {new:true})
     .then((shelterDetails) => {
