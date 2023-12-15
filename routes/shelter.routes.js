@@ -69,7 +69,7 @@ const { shelterId } = req.params;
 });
 
 //Deletes a specific shelter by id
-router.delete("/shelters/:shelterId", isAuthenticated, isOwner, (req, res, next) => {
+router.delete("/shelters/:shelterId", isAuthenticated, (req, res, next) => {
     Shelter.findByIdAndDelete(req.params.shelterId)
     .then((shelterDetails) => {
       res.json(shelterDetails);
